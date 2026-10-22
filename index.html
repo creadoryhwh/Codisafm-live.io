@@ -140,9 +140,9 @@
   .cards-wrapper::-webkit-scrollbar { height: 6px; }
   .cards-wrapper::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.4); border-radius: 10px; }
 
-  /* Tarjeta Individual */
+  /* Tarjeta Individual (Estilo Original) */
   .card {
-    flex: 0 0 210px;
+    flex: 0 0 200px;
     position: relative;
     background: rgba(8, 14, 26, 0.85); 
     border: 1px solid rgba(255, 255, 255, 0.15);
@@ -198,8 +198,8 @@
 
   /* ===== EL CÍRCULO BLANCO DEL LOGO ===== */
   .logo-container {
-    width: 120px;
-    height: 120px;
+    width: 105px;
+    height: 105px;
     margin-bottom: 20px;
     display: flex;
     align-items: center;
@@ -208,13 +208,11 @@
     
     /* Fondo blanco puro y resplandeciente */
     background: #ffffff; 
-    border: 4px solid #ffffff;
-    padding: 10px;
+    border: 3px solid rgba(255, 255, 255, 0.8);
+    padding: 8px; /* Espacio para que el logo respire */
     
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 
-      0 0 15px rgba(255, 255, 255, 0.3), /* Brillo blanco exterior */
-      inset 0 0 10px rgba(0, 0, 0, 0.1);  /* Sombra sutil interior */
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
     z-index: 2;
   }
 
@@ -222,23 +220,20 @@
     width: 100%;
     height: 100%;
     object-fit: contain;
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+    filter: drop-shadow(0 2px 3px rgba(0,0,0,0.2));
     transition: transform 0.3s ease, filter 0.3s ease;
   }
 
-  /* Efecto del logo al presionar la tecla */
+  /* Efecto al pasar el mouse por la tarjeta */
   .card:hover .logo-container {
     transform: scale(1.05);
-    /* El anillo blanco se ilumina con el color de la radio */
-    box-shadow: 
-      0 0 25px var(--glow), 
-      0 0 40px var(--glow),
-      inset 0 0 10px rgba(0, 0, 0, 0.1);
+    /* El borde blanco brilla con el color de la radio */
+    box-shadow: 0 0 20px var(--glow), inset 0 0 10px rgba(0,0,0,0.1);
   }
 
   .card:hover .logo-container img {
     transform: scale(1.1);
-    filter: drop-shadow(0 4px 8px var(--glow));
+    filter: drop-shadow(0 4px 6px var(--glow));
   }
 
   /* TEXTOS */
@@ -322,8 +317,8 @@
   /* Ajustes para móviles */
   @media (max-width: 768px) {
     .cards-wrapper { justify-content: flex-start; padding-bottom: 20px; }
-    .card { flex: 0 0 180px; padding: 20px 10px 15px; }
-    .logo-container { width: 100px; height: 100px; padding: 8px; }
+    .card { flex: 0 0 170px; padding: 20px 10px 15px; }
+    .logo-container { width: 85px; height: 85px; padding: 6px; }
     .on-air-sign { padding: 10px 20px; }
   }
 </style>
@@ -335,7 +330,7 @@
   <header>
     <div class="on-air-sign">
       <h1>CODISA ON AIR</h1>
-      <p>Nicaragua · 24/7</p>
+      <p>Managua Nicaragua · 24/7</p>
     </div>
     <p class="subtitle">Nicaragua · En vivo 24/7</p>
   </header>
