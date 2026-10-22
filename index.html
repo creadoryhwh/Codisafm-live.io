@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CODISA FM Live · Nicaragua</title>
+<title>CODISA FM Live · Nicaragua</title> <!-- CORREGIDO AQUÍ -->
 <!-- Fuentes Futuristas -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -36,8 +36,8 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    opacity: 0.45; /* Aumentado para que se vea más */
-    filter: blur(1px) contrast(110%); /* Menos filtro para no perder color */
+    opacity: 0.55; /* Aumentado para que se vea mucho más */
+    filter: blur(1px) contrast(110%); 
     z-index: 0;
     pointer-events: none;
   }
@@ -47,7 +47,7 @@
     content: "";
     position: fixed;
     inset: 0;
-    background: linear-gradient(180deg, rgba(1,3,7,0.3) 0%, rgba(1,3,7,0.7) 100%);
+    background: linear-gradient(180deg, rgba(1,3,7,0.2) 0%, rgba(1,3,7,0.6) 100%);
     z-index: 1;
     pointer-events: none;
   }
@@ -87,12 +87,12 @@
 
   header p {
     margin-top: 10px;
-    color: #d0e4ff; /* Un poco más claro para contrastar con la bandera */
+    color: #d0e4ff;
     font-size: clamp(1rem, 2vw, 1.2rem);
     letter-spacing: 6px;
     text-transform: uppercase;
     font-weight: 600;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.8); /* Sombra para que se lea sobre la bandera */
+    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
   }
 
   /* ===== CONTENEDOR DE LAS 5 TARJETAS ===== */
@@ -127,7 +127,6 @@
     overflow: hidden;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    /* Transición para simular la tecla del piano al presionar */
     transition: transform 0.15s cubic-bezier(0.25, 0.8, 0.25, 1), 
                 box-shadow 0.15s ease, 
                 border-color 0.15s ease,
@@ -150,7 +149,7 @@
 
   /* EFECTO PIANO AL PASAR EL MOUSE */
   .card:hover {
-    transform: translateY(4px) scale(1.02); /* Se hunde un poco como tecla */
+    transform: translateY(4px) scale(1.02);
     border-color: var(--glow);
     box-shadow: inset 0 -10px 20px -5px var(--glow), 0 10px 30px -5px var(--glow);
     background: rgba(15, 20, 40, 0.95);
@@ -158,8 +157,8 @@
   }
   
   .card:hover::before { 
-    height: 100%; /* El color inunda la tarjeta al estilo piano */
-    opacity: 0.1;
+    height: 100%;
+    opacity: 0.15;
     box-shadow: 0 0 30px var(--glow);
   }
 
@@ -177,7 +176,7 @@
     padding: 5px;
     transition: all 0.4s ease;
     box-shadow: inset 0 0 20px rgba(0,0,0,0.6);
-    z-index: 2; /* Por encima del efecto de fondo */
+    z-index: 2;
   }
 
   .logo-container img {
@@ -284,7 +283,7 @@
   <canvas id="fx-canvas"></canvas>
 
   <header>
-    <h1>CODISA FM Live</h1>
+    <h1>CODISA FM Live</h1> <!-- CORREGIDO AQUÍ -->
     <p>Nicaragua · En vivo 24/7</p>
   </header>
 
@@ -292,7 +291,7 @@
 
     <!-- 1. FUTURA 91.3 FM (Nota: Do) -->
     <a class="card futura" href="https://radiofuturanicaragua.com/" target="_blank" rel="noopener">
-      <div class="logo-container" id="logo-futura" data-note="261.63"> <!-- Frecuencia Do (C4) -->
+      <div class="logo-container" id="logo-futura" data-note="261.63">
         <img src="logo-futura.png" alt="Futura 91.3 FM" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'color:#00d2ff;font-family:Orbitron;font-size:22px;font-weight:bold;\'>91.3</span>';">
       </div>
       <h2>91.3 FM</h2>
@@ -302,7 +301,7 @@
 
     <!-- 2. VIVA 98.3 FM (Nota: Re) -->
     <a class="card viva" href="https://viva983fm.com/" target="_blank" rel="noopener">
-      <div class="logo-container" id="logo-viva" data-note="293.66"> <!-- Frecuencia Re (D4) -->
+      <div class="logo-container" id="logo-viva" data-note="293.66">
         <img src="logo-viva.png" alt="VIVA 98.3 FM" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'color:#ff2d55;font-family:Orbitron;font-size:22px;font-weight:bold;\'>98.3</span>';">
       </div>
       <h2>98.3 FM</h2>
@@ -312,7 +311,7 @@
 
     <!-- 3. SHOCK 99.5 FM (Nota: Mi) -->
     <a class="card shock" href="https://shock.ksoftech.com/" target="_blank" rel="noopener">
-      <div class="logo-container" id="logo-shock" data-note="329.63"> <!-- Frecuencia Mi (E4) -->
+      <div class="logo-container" id="logo-shock" data-note="329.63">
         <img src="logo-shock.png" alt="Shock 99.5 FM" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'color:#ff7300;font-family:Orbitron;font-size:22px;font-weight:bold;\'>99.5</span>';">
       </div>
       <h2>99.5 FM</h2>
@@ -322,7 +321,7 @@
 
     <!-- 4. LA TUANI 100.3 FM (Nota: Fa) -->
     <a class="card tuani" href="https://www.latuani.com.ni/" target="_blank" rel="noopener">
-      <div class="logo-container" id="logo-tuani" data-note="349.23"> <!-- Frecuencia Fa (F4) -->
+      <div class="logo-container" id="logo-tuani" data-note="349.23">
         <img src="logo-tuani.png" alt="La Tuani 100.3 FM" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'color:#ffd700;font-family:Orbitron;font-size:22px;font-weight:bold;\'>100.3</span>';">
       </div>
       <h2>100.3 FM</h2>
@@ -332,7 +331,7 @@
 
     <!-- 5. CLÁSICA 101.9 FM (Nota: Sol) -->
     <a class="card clasica" href="https://clasica1019fm.com/" target="_blank" rel="noopener">
-      <div class="logo-container" id="logo-clasica" data-note="392.00"> <!-- Frecuencia Sol (G4) -->
+      <div class="logo-container" id="logo-clasica" data-note="392.00">
         <img src="logo-clasica.png" alt="Clásica 101.9 FM" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'color:#9d00ff;font-family:Orbitron;font-size:22px;font-weight:bold;\'>101.9</span>';">
       </div>
       <h2>101.9 FM</h2>
@@ -342,7 +341,7 @@
 
   </div>
 
-  <footer>© 2025 · CODISA FM Live</footer>
+  <footer>© 2025 · CODISA FM Live</footer> <!-- CORREGIDO AQUÍ -->
 
   <!-- ===== SCRIPT DE EFECTOS VISUALES Y AUDIO ===== -->
   <script>
@@ -353,11 +352,10 @@
     const notes = ['🎵', '🎶', '🎧', '♪', '♫', '♬', '♩'];
     const colors = ['#00d2ff', '#ff2d55', '#ff7300', '#ffd700', '#9d00ff', '#ffffff'];
 
-    // --- SISTEMA DE AUDIO (Para el efecto Piano) ---
+    // --- SISTEMA DE AUDIO (Efecto Piano) ---
     let audioCtx = null;
 
     function playNote(frequency) {
-      // Inicializar el contexto de audio (necesario por políticas de los navegadores)
       if (!audioCtx) {
         audioCtx = new (window.AudioContext || window.webkitAudioContext)();
       }
@@ -365,10 +363,10 @@
       const oscillator = audioCtx.createOscillator();
       const gainNode = audioCtx.createGain();
       
-      oscillator.type = 'sine'; // Sonido suave tipo piano/campana
+      oscillator.type = 'sine'; 
       oscillator.frequency.value = frequency; 
       
-      // Envolvente de volumen (ataque y caída suave)
+      // Envolvente de volumen (ataque y caída)
       gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
       gainNode.gain.linearRampToValueAtTime(0.3, audioCtx.currentTime + 0.05);
       gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1.5);
@@ -515,10 +513,7 @@
 
       // 2. Explosión Musical (Clic) en el LOGO
       logo.addEventListener('click', function(e) {
-        // Opcional: Si quieres evitar que se abra la página al hacer clic, descomenta la siguiente línea:
-        // e.preventDefault(); 
-        
-        // Reproducir nota al hacer clic también (más fuerte)
+        // Reproducir nota al hacer clic también
         playNote(noteFreq);
 
         // Obtener posición exacta del logo
