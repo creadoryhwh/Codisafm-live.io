@@ -57,42 +57,6 @@
     pointer-events: none;
   }
 
-  /* ===== BOTÓN DESBLOQUEADOR DE AUDIO ===== */
-  .audio-btn {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 100;
-    background: rgba(0, 0, 0, 0.7);
-    color: #ffcc00;
-    border: 2px solid #ffcc00;
-    padding: 10px 20px;
-    border-radius: 30px;
-    font-family: 'Orbitron', sans-serif;
-    font-size: 0.8rem;
-    font-weight: 700;
-    cursor: pointer;
-    box-shadow: 0 0 15px rgba(255, 204, 0, 0.5);
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .audio-btn:hover {
-    background: #ffcc00;
-    color: #000;
-    box-shadow: 0 0 25px #ffcc00;
-  }
-  .audio-btn.active {
-    border-color: #00ff88;
-    color: #00ff88;
-    box-shadow: 0 0 15px rgba(0, 255, 136, 0.5);
-  }
-  .audio-btn.active:hover {
-    background: #00ff88;
-    color: #000;
-  }
-
   /* ===== CONTENIDO PRINCIPAL ===== */
   .main-container {
     position: relative;
@@ -103,10 +67,10 @@
     width: 100%;
   }
 
-  /* ===== LA MASCOTA CODISA (EN LA PARTE SUPERIOR) ===== */
+  /* ===== LA MASCOTA CODISA ===== */
   .mascota-container {
-    width: 160px; /* Tamaño ajustado para que no estorbe */
-    margin-bottom: -15px; /* Se acerca un poco al letrero */
+    width: 160px; 
+    margin-bottom: -15px; 
     z-index: 5;
     animation: flotar 4s ease-in-out infinite;
     pointer-events: none;
@@ -115,7 +79,7 @@
   .mascota-container img {
     width: 100%;
     height: auto;
-    mix-blend-mode: multiply; /* Hace que el fondo blanco desaparezca */
+    mix-blend-mode: multiply; 
     filter: drop-shadow(0 10px 15px rgba(0,0,0,0.6)) contrast(110%);
   }
 
@@ -386,15 +350,11 @@
     .card { flex: 0 0 170px; padding: 20px 10px 15px; }
     .logo-container { width: 85px; height: 85px; padding: 6px; }
     .on-air-sign { padding: 10px 20px; }
-    .audio-btn { top: 10px; right: 10px; font-size: 0.7rem; padding: 8px 15px; }
     .mascota-container { width: 120px; margin-bottom: -10px; }
   }
 </style>
 </head>
 <body>
-
-  <!-- Botón para desbloquear el audio -->
-  <button id="unlock-btn" class="audio-btn">🔊 ACTIVAR SONIDO</button>
 
   <canvas id="fx-canvas"></canvas>
 
@@ -481,24 +441,25 @@
 
     // --- SISTEMA DE AUDIO ---
     let audioCtx = null;
-    const unlockBtn = document.getElementById('unlock-btn');
 
+    // Función para desbloquear el audio (se activa con el primer clic en cualquier parte)
     function unlockAudio() {
       if (!audioCtx) {
         audioCtx = new (window.AudioContext || window.webkitAudioContext)();
       }
       if (audioCtx.state === 'suspended') {
         audioCtx.resume().then(() => {
-          unlockBtn.textContent = "🔇 SONIDO ACTIVO";
-          unlockBtn.classList.add('active');
-          setTimeout(() => { unlockBtn.style.opacity = '0'; }, 3000);
+          console.log("Audio desbloqueado automáticamente por clic.");
         });
       }
     }
 
-    unlockBtn.addEventListener('click', unlockAudio);
+    // Escuchamos el primer clic o toque en el cuerpo de la página
+    document.body.addEventListener('click', unlockAudio, { once: true });
+    document.body.addEventListener('touchstart', unlockAudio, { once: true });
 
     function playNote(frequency) {
+      // Si el audio no está listo o está suspendido, no hace nada (hasta que haya un clic)
       if (!audioCtx || audioCtx.state === 'suspended') return; 
       
       const oscillator = audioCtx.createOscillator();
