@@ -13,7 +13,7 @@
   /* ===== RESET ===== */
   * { margin:0; padding:0; box-sizing:border-box; }
 
-  /* ===== FONDO BASE: LA BANDERA (AHORA MUY VISIBLE) ===== */
+  /* ===== FONDO BASE: LA BANDERA ===== */
   body {
     font-family: 'Rajdhani', sans-serif;
     min-height: 100vh;
@@ -27,7 +27,6 @@
     background: #050a15; 
   }
 
-  /* Capa de la bandera */
   body::before {
     content: "";
     position: fixed;
@@ -36,17 +35,15 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    opacity: 0.85; /* ¡Aumentado al 85% para que se vea clarísima! */
+    opacity: 0.85; 
     z-index: 0;
     pointer-events: none;
   }
 
-  /* Capa oscura sutil para que los textos se lean perfectamente */
   body::after {
     content: "";
     position: fixed;
     inset: 0;
-    /* Un gradiente suave: oscuro abajo para las tarjetas, claro arriba para el letrero */
     background: linear-gradient(180deg, rgba(5,10,21,0.2) 0%, rgba(5,10,21,0.6) 50%, rgba(5,10,21,0.9) 100%);
     z-index: 1;
     pointer-events: none;
@@ -63,12 +60,12 @@
   /* ===== CONTENIDO PRINCIPAL ===== */
   header, .cards-wrapper, footer { position: relative; z-index: 3; }
 
-  header { text-align:center; margin-bottom: 40px; }
+  header { text-align:center; margin-bottom: 30px; }
 
   /* ===== EL LETRERO CODISA ON AIR ===== */
   .on-air-sign {
     display: inline-block;
-    background: rgba(10, 5, 0, 0.9); /* Fondo oscuro para que el neón resalte */
+    background: rgba(10, 5, 0, 0.9); 
     border: 5px solid #ffcc00; 
     border-radius: 12px;
     padding: 15px 45px;
@@ -143,11 +140,11 @@
   .cards-wrapper::-webkit-scrollbar { height: 6px; }
   .cards-wrapper::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.4); border-radius: 10px; }
 
-  /* Tarjeta Individual (Estilo Tecla 3D) */
+  /* Tarjeta Individual */
   .card {
-    flex: 0 0 200px;
+    flex: 0 0 210px;
     position: relative;
-    background: rgba(8, 14, 26, 0.85); /* Fondo más oscuro para contraste */
+    background: rgba(8, 14, 26, 0.85); 
     border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 16px;
     padding: 30px 15px 25px;
@@ -158,7 +155,7 @@
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     
-    transition: all 0.12s cubic-bezier(0.25, 0.8, 0.25, 1);
+    transition: all 0.15s cubic-bezier(0.25, 0.8, 0.25, 1);
     
     display: flex;
     flex-direction: column;
@@ -177,7 +174,7 @@
     height: 4px;
     background: var(--glow);
     box-shadow: 0 0 15px var(--glow);
-    transition: all 0.12s ease;
+    transition: all 0.15s ease;
   }
 
   /* EFECTO PIANO AL PASAR EL MOUSE (Se hunde) */
@@ -199,40 +196,97 @@
     box-shadow: 0 0 25px var(--glow), 0 0 10px var(--glow);
   }
 
-  /* CONTENEDOR DEL LOGO */
-  .logo-container {
-    width: 105px;
-    height: 105px;
+  /* ===== EL MARCO ESTILO PIANO ===== */
+  .piano-frame {
+    width: 130px;
+    height: 130px;
     margin-bottom: 20px;
+    position: relative;
+    background: #1a1a1a; /* Marco exterior oscuro */
+    border-radius: 12px;
+    padding: 10px;
+    box-shadow: 
+      inset 0 0 10px rgba(0,0,0,1),
+      0 4px 8px rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .card:hover .piano-frame {
+    transform: scale(1.05);
+    box-shadow: 
+      inset 0 0 10px rgba(0,0,0,1),
+      0 0 20px var(--glow);
+  }
+
+  /* La tecla blanca central */
+  .piano-key-white {
+    width: 100%;
+    height: 100%;
+    background: #f0f0f0; /* Blanco puro para el logo */
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 
+      inset 0 -4px 6px rgba(0,0,0,0.2), /* Sombra inferior */
+      0 2px 4px rgba(0,0,0,0.4);
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s ease;
+  }
+
+  .card:hover .piano-key-white {
+    background: #ffffff; /* Brillo extra al pasar el mouse */
+  }
+
+  /* Contenedor del logo dentro de la tecla blanca */
+  .logo-container {
+    width: 90px;
+    height: 90px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background: #0a1120; 
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    padding: 6px;
-    transition: all 0.3s ease;
-    box-shadow: inset 0 0 15px rgba(0,0,0,0.8);
-    z-index: 2;
+    border: 2px solid rgba(0,0,0,0.1);
+    background: transparent;
+    z-index: 3;
   }
 
   .logo-container img {
     width: 100%;
     height: 100%;
     object-fit: contain;
-    filter: drop-shadow(0 0 5px rgba(255,255,255,0.2));
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
     transition: transform 0.3s ease, filter 0.3s ease;
-  }
-
-  .card:hover .logo-container {
-    border-color: var(--glow);
-    box-shadow: inset 0 0 20px var(--glow), 0 0 15px var(--glow);
   }
 
   .card:hover .logo-container img {
     transform: scale(1.1);
-    filter: drop-shadow(0 0 10px var(--glow));
+    filter: drop-shadow(0 4px 8px var(--glow));
   }
+
+  /* Las teclas negras colgando */
+  .piano-key-black {
+    position: absolute;
+    top: -10px; /* Se superponen al marco */
+    width: 14px;
+    height: 65px; /* Largo de la tecla negra */
+    background: linear-gradient(180deg, #111 0%, #333 100%);
+    border-radius: 0 0 4px 4px;
+    box-shadow: 
+      2px 2px 5px rgba(0,0,0,0.8),
+      inset 1px 0px 2px rgba(255,255,255,0.2);
+    z-index: 4;
+  }
+
+  /* Posiciones de las teclas negras */
+  .key-black-1 { left: 20%; }
+  .key-black-2 { left: 44%; }
+  .key-black-3 { left: 68%; }
 
   /* TEXTOS */
   .card h2 {
@@ -315,9 +369,10 @@
   /* Ajustes para móviles */
   @media (max-width: 768px) {
     .cards-wrapper { justify-content: flex-start; padding-bottom: 20px; }
-    .card { flex: 0 0 170px; padding: 20px 10px 15px; box-shadow: 0 6px 0 rgba(0,0,0,0.8), 0 10px 15px rgba(0,0,0,0.6); }
-    .card:hover { transform: translateY(4px); box-shadow: 0 2px 0 rgba(0,0,0,0.8), 0 4px 8px rgba(0,0,0,0.6); }
-    .logo-container { width: 80px; height: 80px; }
+    .card { flex: 0 0 180px; padding: 20px 10px 15px; }
+    .piano-frame { width: 110px; height: 110px; }
+    .logo-container { width: 75px; height: 75px; }
+    .piano-key-black { height: 55px; width: 12px; top: -10px; }
     .on-air-sign { padding: 10px 20px; }
   }
 </style>
@@ -327,12 +382,10 @@
   <canvas id="fx-canvas"></canvas>
 
   <header>
-    <!-- LETRERO ON AIR -->
     <div class="on-air-sign">
       <h1>CODISA ON AIR</h1>
       <p>Nicaragua · 24/7</p>
     </div>
-    <!-- Subtítulo original -->
     <p class="subtitle">Nicaragua · En vivo 24/7</p>
   </header>
 
@@ -340,8 +393,15 @@
 
     <!-- 1. FUTURA 91.3 FM -->
     <a class="card futura" href="https://radiofuturanicaragua.com/" target="_blank" rel="noopener">
-      <div class="logo-container" id="logo-futura" data-note="261.63">
-        <img src="logo-futura.png" alt="Futura 91.3 FM" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'color:#00d2ff;font-family:Orbitron;font-size:22px;font-weight:bold;\'>91.3</span>';">
+      <div class="piano-frame">
+        <div class="piano-key-white">
+          <div class="logo-container" id="logo-futura" data-note="261.63">
+            <img src="logo-futura.png" alt="Futura 91.3 FM" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'color:#00d2ff;font-family:Orbitron;font-size:22px;font-weight:bold;\'>91.3</span>';">
+          </div>
+        </div>
+        <div class="piano-key-black key-black-1"></div>
+        <div class="piano-key-black key-black-2"></div>
+        <div class="piano-key-black key-black-3"></div>
       </div>
       <h2>91.3 FM</h2>
       <span class="tag">Futura</span>
@@ -350,8 +410,15 @@
 
     <!-- 2. VIVA 98.3 FM -->
     <a class="card viva" href="https://viva983fm.com/" target="_blank" rel="noopener">
-      <div class="logo-container" id="logo-viva" data-note="293.66">
-        <img src="logo-viva.png" alt="VIVA 98.3 FM" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'color:#ff2d55;font-family:Orbitron;font-size:22px;font-weight:bold;\'>98.3</span>';">
+      <div class="piano-frame">
+        <div class="piano-key-white">
+          <div class="logo-container" id="logo-viva" data-note="293.66">
+            <img src="logo-viva.png" alt="VIVA 98.3 FM" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'color:#ff2d55;font-family:Orbitron;font-size:22px;font-weight:bold;\'>98.3</span>';">
+          </div>
+        </div>
+        <div class="piano-key-black key-black-1"></div>
+        <div class="piano-key-black key-black-2"></div>
+        <div class="piano-key-black key-black-3"></div>
       </div>
       <h2>98.3 FM</h2>
       <span class="tag">VIVA</span>
@@ -360,8 +427,15 @@
 
     <!-- 3. SHOCK 99.5 FM -->
     <a class="card shock" href="https://shock.ksoftech.com/" target="_blank" rel="noopener">
-      <div class="logo-container" id="logo-shock" data-note="329.63">
-        <img src="logo-shock.png" alt="Shock 99.5 FM" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'color:#ff7300;font-family:Orbitron;font-size:22px;font-weight:bold;\'>99.5</span>';">
+      <div class="piano-frame">
+        <div class="piano-key-white">
+          <div class="logo-container" id="logo-shock" data-note="329.63">
+            <img src="logo-shock.png" alt="Shock 99.5 FM" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'color:#ff7300;font-family:Orbitron;font-size:22px;font-weight:bold;\'>99.5</span>';">
+          </div>
+        </div>
+        <div class="piano-key-black key-black-1"></div>
+        <div class="piano-key-black key-black-2"></div>
+        <div class="piano-key-black key-black-3"></div>
       </div>
       <h2>99.5 FM</h2>
       <span class="tag">Shock</span>
@@ -370,8 +444,15 @@
 
     <!-- 4. LA TUANI 100.3 FM -->
     <a class="card tuani" href="https://www.latuani.com.ni/" target="_blank" rel="noopener">
-      <div class="logo-container" id="logo-tuani" data-note="349.23">
-        <img src="logo-tuani.png" alt="La Tuani 100.3 FM" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'color:#ffd700;font-family:Orbitron;font-size:22px;font-weight:bold;\'>100.3</span>';">
+      <div class="piano-frame">
+        <div class="piano-key-white">
+          <div class="logo-container" id="logo-tuani" data-note="349.23">
+            <img src="logo-tuani.png" alt="La Tuani 100.3 FM" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'color:#ffd700;font-family:Orbitron;font-size:22px;font-weight:bold;\'>100.3</span>';">
+          </div>
+        </div>
+        <div class="piano-key-black key-black-1"></div>
+        <div class="piano-key-black key-black-2"></div>
+        <div class="piano-key-black key-black-3"></div>
       </div>
       <h2>100.3 FM</h2>
       <span class="tag">La Tuani</span>
@@ -380,8 +461,15 @@
 
     <!-- 5. CLÁSICA 101.9 FM -->
     <a class="card clasica" href="https://clasica1019fm.com/" target="_blank" rel="noopener">
-      <div class="logo-container" id="logo-clasica" data-note="392.00">
-        <img src="logo-clasica.png" alt="Clásica 101.9 FM" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'color:#9d00ff;font-family:Orbitron;font-size:22px;font-weight:bold;\'>101.9</span>';">
+      <div class="piano-frame">
+        <div class="piano-key-white">
+          <div class="logo-container" id="logo-clasica" data-note="392.00">
+            <img src="logo-clasica.png" alt="Clásica 101.9 FM" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'color:#9d00ff;font-family:Orbitron;font-size:22px;font-weight:bold;\'>101.9</span>';">
+          </div>
+        </div>
+        <div class="piano-key-black key-black-1"></div>
+        <div class="piano-key-black key-black-2"></div>
+        <div class="piano-key-black key-black-3"></div>
       </div>
       <h2>101.9 FM</h2>
       <span class="tag">Clásica</span>
@@ -401,28 +489,28 @@
     const notes = ['🎵', '🎶', '🎧', '♪', '♫', '♬', '♩'];
     const colors = ['#00d2ff', '#ff2d55', '#ff7300', '#ffd700', '#9d00ff', '#ffffff'];
 
-    // --- SISTEMA DE AUDIO (Efecto Piano) ---
+    // --- SISTEMA DE AUDIO Y DESBLOQUEO DE AUTOPLAY ---
     let audioCtx = null;
 
+    // Esta función se encarga de "despertar" el motor de audio del navegador
     function unlockAudio() {
       if (!audioCtx) {
         audioCtx = new (window.AudioContext || window.webkitAudioContext)();
       }
       if (audioCtx.state === 'suspended') {
-        audioCtx.resume();
+        audioCtx.resume().then(() => {
+          console.log("Audio listo y desbloqueado.");
+        });
       }
     }
+
+    // Escuchamos el primer clic o toque en CUALQUIER parte de la pantalla para desbloquear
     document.body.addEventListener('click', unlockAudio, { once: true });
     document.body.addEventListener('touchstart', unlockAudio, { once: true });
 
     function playNote(frequency) {
-      if (!audioCtx) {
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      }
-      if (audioCtx.state === 'suspended') {
-        audioCtx.resume();
-      }
-
+      if (!audioCtx) return; // Si por alguna razón no está listo, no hace nada
+      
       const oscillator = audioCtx.createOscillator();
       const gainNode = audioCtx.createGain();
       
@@ -497,16 +585,12 @@
         this.x = x;
         this.y = y;
         const angle = Math.random() * Math.PI * 2;
-        
         const speed = isHover ? (Math.random() * 6 + 2) : (Math.random() * 12 + 4);
-        
         this.vx = Math.cos(angle) * speed;
         this.vy = Math.sin(angle) * speed;
-        
         this.gravity = isHover ? 0.15 : 0.25;
         this.friction = 0.95;
         this.size = isHover ? (Math.random() * 12 + 10) : (Math.random() * 18 + 12);
-        
         this.note = notes[Math.floor(Math.random() * notes.length)];
         this.color = colors[Math.floor(Math.random() * colors.length)];
         this.opacity = 1;
@@ -574,6 +658,8 @@
 
       // 1. EFECTO HOVER: Suena la nota y salen notas musicales
       card.addEventListener('mouseenter', () => {
+        // Llamamos a unlockAudio por si el usuario ya interactuó pero el hover es lo primero
+        if(audioCtx && audioCtx.state === 'suspended') { audioCtx.resume(); }
         playNote(noteFreq);
         
         const rect = logo.getBoundingClientRect();
@@ -587,7 +673,9 @@
 
       // 2. EFECTO CLIC: Explosión grande
       logo.addEventListener('click', function(e) {
+        if(audioCtx && audioCtx.state === 'suspended') { audioCtx.resume(); }
         playNote(noteFreq);
+        
         const rect = this.getBoundingClientRect();
         const centerX = rect.left + rect.width / 2;
         const centerY = rect.top + rect.height / 2;
