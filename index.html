@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CODISA FM Live · Managua Nicaragua</title>
+<title>CODISA FM Live · Nicaragua</title>
 <!-- Fuentes Futuristas -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -55,6 +55,68 @@
     inset: 0;
     z-index: 2;
     pointer-events: none;
+  }
+
+  /* ===== BOTÓN DESBLOQUEADOR DE AUDIO ===== */
+  .audio-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+    background: rgba(0, 0, 0, 0.7);
+    color: #ffcc00;
+    border: 2px solid #ffcc00;
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 0 15px rgba(255, 204, 0, 0.5);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .audio-btn:hover {
+    background: #ffcc00;
+    color: #000;
+    box-shadow: 0 0 25px #ffcc00;
+  }
+  .audio-btn.active {
+    border-color: #00ff88;
+    color: #00ff88;
+    box-shadow: 0 0 15px rgba(0, 255, 136, 0.5);
+  }
+  .audio-btn.active:hover {
+    background: #00ff88;
+    color: #000;
+  }
+
+  /* ===== LA MASCOTA CODISA (EFECTO FLOTANTE) ===== */
+  .mascota-container {
+    position: absolute;
+    left: 4%; /* Posicionada a la izquierda */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 320px;
+    z-index: 4;
+    pointer-events: none; /* Para que no bloquee los clics */
+    animation: flotar 4s ease-in-out infinite;
+  }
+
+  .mascota-container img {
+    width: 100%;
+    height: auto;
+    /* El mix-blend-mode hace que el fondo blanco desaparezca mágicamente */
+    mix-blend-mode: multiply; 
+    /* Resplandor azul/blanco estilo neón */
+    filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.4)) contrast(110%);
+  }
+
+  @keyframes flotar {
+    0%, 100% { transform: translateY(-50%); }
+    50% { transform: translateY(-55%); }
   }
 
   /* ===== CONTENIDO PRINCIPAL ===== */
@@ -177,16 +239,14 @@
     transition: all 0.15s ease;
   }
 
-  /* EFECTO PIANO AL PASAR EL MOUSE (La tarjeta se hunde) */
+  /* EFECTO PIANO AL PASAR EL MOUSE */
   .card:hover {
     transform: translateY(6px); 
     border-color: var(--glow);
-    
     box-shadow: 
       0 2px 0 rgba(0, 0, 0, 0.8), 
       0 5px 10px rgba(0,0,0,0.6),
       inset 0 0 20px rgba(255, 255, 255, 0.05); 
-    
     background: rgba(12, 20, 35, 0.95);
     z-index: 10;
   }
@@ -205,15 +265,10 @@
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    
     background: #ffffff; 
     border: 3px solid rgba(255, 255, 255, 0.8);
     padding: 8px; 
-    
-    /* Transición suave para el efecto 3D */
     transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
-    
-    /* Sombra base (parece que está apoyado) */
     box-shadow: 
       0 4px 6px rgba(0,0,0,0.3),
       inset 0 0 10px rgba(0,0,0,0.1);
@@ -224,27 +279,22 @@
     width: 100%;
     height: 100%;
     object-fit: contain;
-    /* Transición para el resplandor del logo */
     transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.4s ease;
     filter: drop-shadow(0 2px 3px rgba(0,0,0,0.2));
   }
 
   /* ===== EFECTO 3D DE ALTA CALIDAD AL PASAR EL MOUSE ===== */
   .card:hover .logo-container {
-    /* Se eleva y se hace un poco más grande (sale de la pantalla) */
     transform: translateY(-10px) scale(1.1);
-    
-    /* Múltiples capas de sombras para el efecto 3D y el neón del color de la radio */
     box-shadow: 
-      0 15px 25px rgba(0,0,0,0.4),          /* Sombra de elevación principal */
-      0 5px 10px rgba(0,0,0,0.3),           /* Sombra secundaria */
-      0 0 25px var(--glow),                 /* Resplandor exterior neón */
-      0 0 40px var(--glow),                 /* Resplandor más amplio */
-      inset 0 -4px 8px rgba(0,0,0,0.1);     /* Sombra interior para volumen */
+      0 15px 25px rgba(0,0,0,0.4), 
+      0 5px 10px rgba(0,0,0,0.3), 
+      0 0 25px var(--glow), 
+      0 0 40px var(--glow), 
+      inset 0 -4px 8px rgba(0,0,0,0.1); 
   }
 
   .card:hover .logo-container img {
-    /* El logo en sí también resalta */
     transform: scale(1.05);
     filter: drop-shadow(0 10px 15px rgba(0,0,0,0.4)) drop-shadow(0 0 15px var(--glow));
   }
@@ -328,24 +378,50 @@
   }
 
   /* Ajustes para móviles */
+  @media (max-width: 1200px) {
+    /* En pantallas más pequeñas, movemos la mascota arriba y la hacemos más pequeña */
+    .mascota-container {
+      position: relative;
+      left: auto;
+      top: auto;
+      transform: none;
+      width: 180px;
+      margin-bottom: -20px;
+      animation: flotar-movil 4s ease-in-out infinite;
+    }
+    @keyframes flotar-movil {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+  }
+
   @media (max-width: 768px) {
     .cards-wrapper { justify-content: flex-start; padding-bottom: 20px; }
     .card { flex: 0 0 170px; padding: 20px 10px 15px; }
     .logo-container { width: 85px; height: 85px; padding: 6px; }
     .on-air-sign { padding: 10px 20px; }
+    .audio-btn { top: 10px; right: 10px; font-size: 0.7rem; padding: 8px 15px; }
   }
 </style>
 </head>
 <body>
 
+  <!-- Botón para desbloquear el audio -->
+  <button id="unlock-btn" class="audio-btn">🔊 ACTIVAR SONIDO</button>
+
   <canvas id="fx-canvas"></canvas>
+
+  <!-- AQUÍ ESTÁ LA MASCOTA -->
+  <div class="mascota-container">
+    <img src="mascota-codisa.png" alt="Mascota CODISA">
+  </div>
 
   <header>
     <div class="on-air-sign">
       <h1>CODISA ON AIR</h1>
-
+      <p>Nicaragua · 24/7</p>
     </div>
-    <p class="subtitle">Managua Nicaragua · En vivo 24/7</p>
+    <p class="subtitle">Nicaragua · En vivo 24/7</p>
   </header>
 
   <div class="cards-wrapper">
@@ -413,8 +489,9 @@
     const notes = ['🎵', '🎶', '🎧', '♪', '♫', '♬', '♩'];
     const colors = ['#00d2ff', '#ff2d55', '#ff7300', '#ffd700', '#9d00ff', '#ffffff'];
 
-    // --- SISTEMA DE AUDIO Y DESBLOQUEO ---
+    // --- SISTEMA DE AUDIO ---
     let audioCtx = null;
+    const unlockBtn = document.getElementById('unlock-btn');
 
     function unlockAudio() {
       if (!audioCtx) {
@@ -422,17 +499,17 @@
       }
       if (audioCtx.state === 'suspended') {
         audioCtx.resume().then(() => {
-          console.log("Audio listo y desbloqueado.");
+          unlockBtn.textContent = "🔇 SONIDO ACTIVO";
+          unlockBtn.classList.add('active');
+          setTimeout(() => { unlockBtn.style.opacity = '0'; }, 3000);
         });
       }
     }
 
-    // Desbloquea el audio con el primer clic o toque
-    document.body.addEventListener('click', unlockAudio, { once: true });
-    document.body.addEventListener('touchstart', unlockAudio, { once: true });
+    unlockBtn.addEventListener('click', unlockAudio);
 
     function playNote(frequency) {
-      if (!audioCtx) return; 
+      if (!audioCtx || audioCtx.state === 'suspended') return; 
       
       const oscillator = audioCtx.createOscillator();
       const gainNode = audioCtx.createGain();
@@ -579,11 +656,8 @@
       const logo = card.querySelector('.logo-container');
       const noteFreq = parseFloat(logo.getAttribute('data-note'));
 
-      // 1. EFECTO HOVER: Suena la nota y salen notas musicales
       card.addEventListener('mouseenter', () => {
-        if(audioCtx && audioCtx.state === 'suspended') { audioCtx.resume(); }
         playNote(noteFreq);
-        
         const rect = logo.getBoundingClientRect();
         const centerX = rect.left + rect.width / 2;
         const centerY = rect.top + rect.height / 2;
@@ -593,11 +667,8 @@
         }
       });
 
-      // 2. EFECTO CLIC: Explosión grande
       logo.addEventListener('click', function(e) {
-        if(audioCtx && audioCtx.state === 'suspended') { audioCtx.resume(); }
         playNote(noteFreq);
-        
         const rect = this.getBoundingClientRect();
         const centerX = rect.left + rect.width / 2;
         const centerY = rect.top + rect.height / 2;
