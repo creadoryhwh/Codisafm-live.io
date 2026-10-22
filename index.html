@@ -196,97 +196,50 @@
     box-shadow: 0 0 25px var(--glow), 0 0 10px var(--glow);
   }
 
-  /* ===== EL MARCO ESTILO PIANO ===== */
-  .piano-frame {
-    width: 130px;
-    height: 130px;
-    margin-bottom: 20px;
-    position: relative;
-    background: #1a1a1a; /* Marco exterior oscuro */
-    border-radius: 12px;
-    padding: 10px;
-    box-shadow: 
-      inset 0 0 10px rgba(0,0,0,1),
-      0 4px 8px rgba(0,0,0,0.6);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 2;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-
-  .card:hover .piano-frame {
-    transform: scale(1.05);
-    box-shadow: 
-      inset 0 0 10px rgba(0,0,0,1),
-      0 0 20px var(--glow);
-  }
-
-  /* La tecla blanca central */
-  .piano-key-white {
-    width: 100%;
-    height: 100%;
-    background: #f0f0f0; /* Blanco puro para el logo */
-    border-radius: 6px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 
-      inset 0 -4px 6px rgba(0,0,0,0.2), /* Sombra inferior */
-      0 2px 4px rgba(0,0,0,0.4);
-    position: relative;
-    overflow: hidden;
-    transition: background 0.3s ease;
-  }
-
-  .card:hover .piano-key-white {
-    background: #ffffff; /* Brillo extra al pasar el mouse */
-  }
-
-  /* Contenedor del logo dentro de la tecla blanca */
+  /* ===== EL CÍRCULO BLANCO DEL LOGO ===== */
   .logo-container {
-    width: 90px;
-    height: 90px;
+    width: 120px;
+    height: 120px;
+    margin-bottom: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    border: 2px solid rgba(0,0,0,0.1);
-    background: transparent;
-    z-index: 3;
+    
+    /* Fondo blanco puro y resplandeciente */
+    background: #ffffff; 
+    border: 4px solid #ffffff;
+    padding: 10px;
+    
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 
+      0 0 15px rgba(255, 255, 255, 0.3), /* Brillo blanco exterior */
+      inset 0 0 10px rgba(0, 0, 0, 0.1);  /* Sombra sutil interior */
+    z-index: 2;
   }
 
   .logo-container img {
     width: 100%;
     height: 100%;
     object-fit: contain;
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
     transition: transform 0.3s ease, filter 0.3s ease;
+  }
+
+  /* Efecto del logo al presionar la tecla */
+  .card:hover .logo-container {
+    transform: scale(1.05);
+    /* El anillo blanco se ilumina con el color de la radio */
+    box-shadow: 
+      0 0 25px var(--glow), 
+      0 0 40px var(--glow),
+      inset 0 0 10px rgba(0, 0, 0, 0.1);
   }
 
   .card:hover .logo-container img {
     transform: scale(1.1);
     filter: drop-shadow(0 4px 8px var(--glow));
   }
-
-  /* Las teclas negras colgando */
-  .piano-key-black {
-    position: absolute;
-    top: -10px; /* Se superponen al marco */
-    width: 14px;
-    height: 65px; /* Largo de la tecla negra */
-    background: linear-gradient(180deg, #111 0%, #333 100%);
-    border-radius: 0 0 4px 4px;
-    box-shadow: 
-      2px 2px 5px rgba(0,0,0,0.8),
-      inset 1px 0px 2px rgba(255,255,255,0.2);
-    z-index: 4;
-  }
-
-  /* Posiciones de las teclas negras */
-  .key-black-1 { left: 20%; }
-  .key-black-2 { left: 44%; }
-  .key-black-3 { left: 68%; }
 
   /* TEXTOS */
   .card h2 {
@@ -370,9 +323,7 @@
   @media (max-width: 768px) {
     .cards-wrapper { justify-content: flex-start; padding-bottom: 20px; }
     .card { flex: 0 0 180px; padding: 20px 10px 15px; }
-    .piano-frame { width: 110px; height: 110px; }
-    .logo-container { width: 75px; height: 75px; }
-    .piano-key-black { height: 55px; width: 12px; top: -10px; }
+    .logo-container { width: 100px; height: 100px; padding: 8px; }
     .on-air-sign { padding: 10px 20px; }
   }
 </style>
@@ -393,15 +344,8 @@
 
     <!-- 1. FUTURA 91.3 FM -->
     <a class="card futura" href="https://radiofuturanicaragua.com/" target="_blank" rel="noopener">
-      <div class="piano-frame">
-        <div class="piano-key-white">
-          <div class="logo-container" id="logo-futura" data-note="261.63">
-            <img src="logo-futura.png" alt="Futura 91.3 FM" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'color:#00d2ff;font-family:Orbitron;font-size:22px;font-weight:bold;\'>91.3</span>';">
-          </div>
-        </div>
-        <div class="piano-key-black key-black-1"></div>
-        <div class="piano-key-black key-black-2"></div>
-        <div class="piano-key-black key-black-3"></div>
+      <div class="logo-container" id="logo-futura" data-note="261.63">
+        <img src="logo-futura.png" alt="Futura 91.3 FM" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'color:#00d2ff;font-family:Orbitron;font-size:22px;font-weight:bold;\'>91.3</span>';">
       </div>
       <h2>91.3 FM</h2>
       <span class="tag">Futura</span>
@@ -410,15 +354,8 @@
 
     <!-- 2. VIVA 98.3 FM -->
     <a class="card viva" href="https://viva983fm.com/" target="_blank" rel="noopener">
-      <div class="piano-frame">
-        <div class="piano-key-white">
-          <div class="logo-container" id="logo-viva" data-note="293.66">
-            <img src="logo-viva.png" alt="VIVA 98.3 FM" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'color:#ff2d55;font-family:Orbitron;font-size:22px;font-weight:bold;\'>98.3</span>';">
-          </div>
-        </div>
-        <div class="piano-key-black key-black-1"></div>
-        <div class="piano-key-black key-black-2"></div>
-        <div class="piano-key-black key-black-3"></div>
+      <div class="logo-container" id="logo-viva" data-note="293.66">
+        <img src="logo-viva.png" alt="VIVA 98.3 FM" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'color:#ff2d55;font-family:Orbitron;font-size:22px;font-weight:bold;\'>98.3</span>';">
       </div>
       <h2>98.3 FM</h2>
       <span class="tag">VIVA</span>
@@ -427,15 +364,8 @@
 
     <!-- 3. SHOCK 99.5 FM -->
     <a class="card shock" href="https://shock.ksoftech.com/" target="_blank" rel="noopener">
-      <div class="piano-frame">
-        <div class="piano-key-white">
-          <div class="logo-container" id="logo-shock" data-note="329.63">
-            <img src="logo-shock.png" alt="Shock 99.5 FM" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'color:#ff7300;font-family:Orbitron;font-size:22px;font-weight:bold;\'>99.5</span>';">
-          </div>
-        </div>
-        <div class="piano-key-black key-black-1"></div>
-        <div class="piano-key-black key-black-2"></div>
-        <div class="piano-key-black key-black-3"></div>
+      <div class="logo-container" id="logo-shock" data-note="329.63">
+        <img src="logo-shock.png" alt="Shock 99.5 FM" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'color:#ff7300;font-family:Orbitron;font-size:22px;font-weight:bold;\'>99.5</span>';">
       </div>
       <h2>99.5 FM</h2>
       <span class="tag">Shock</span>
@@ -444,15 +374,8 @@
 
     <!-- 4. LA TUANI 100.3 FM -->
     <a class="card tuani" href="https://www.latuani.com.ni/" target="_blank" rel="noopener">
-      <div class="piano-frame">
-        <div class="piano-key-white">
-          <div class="logo-container" id="logo-tuani" data-note="349.23">
-            <img src="logo-tuani.png" alt="La Tuani 100.3 FM" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'color:#ffd700;font-family:Orbitron;font-size:22px;font-weight:bold;\'>100.3</span>';">
-          </div>
-        </div>
-        <div class="piano-key-black key-black-1"></div>
-        <div class="piano-key-black key-black-2"></div>
-        <div class="piano-key-black key-black-3"></div>
+      <div class="logo-container" id="logo-tuani" data-note="349.23">
+        <img src="logo-tuani.png" alt="La Tuani 100.3 FM" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'color:#ffd700;font-family:Orbitron;font-size:22px;font-weight:bold;\'>100.3</span>';">
       </div>
       <h2>100.3 FM</h2>
       <span class="tag">La Tuani</span>
@@ -461,15 +384,8 @@
 
     <!-- 5. CLÁSICA 101.9 FM -->
     <a class="card clasica" href="https://clasica1019fm.com/" target="_blank" rel="noopener">
-      <div class="piano-frame">
-        <div class="piano-key-white">
-          <div class="logo-container" id="logo-clasica" data-note="392.00">
-            <img src="logo-clasica.png" alt="Clásica 101.9 FM" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'color:#9d00ff;font-family:Orbitron;font-size:22px;font-weight:bold;\'>101.9</span>';">
-          </div>
-        </div>
-        <div class="piano-key-black key-black-1"></div>
-        <div class="piano-key-black key-black-2"></div>
-        <div class="piano-key-black key-black-3"></div>
+      <div class="logo-container" id="logo-clasica" data-note="392.00">
+        <img src="logo-clasica.png" alt="Clásica 101.9 FM" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'color:#9d00ff;font-family:Orbitron;font-size:22px;font-weight:bold;\'>101.9</span>';">
       </div>
       <h2>101.9 FM</h2>
       <span class="tag">Clásica</span>
@@ -489,10 +405,9 @@
     const notes = ['🎵', '🎶', '🎧', '♪', '♫', '♬', '♩'];
     const colors = ['#00d2ff', '#ff2d55', '#ff7300', '#ffd700', '#9d00ff', '#ffffff'];
 
-    // --- SISTEMA DE AUDIO Y DESBLOQUEO DE AUTOPLAY ---
+    // --- SISTEMA DE AUDIO Y DESBLOQUEO ---
     let audioCtx = null;
 
-    // Esta función se encarga de "despertar" el motor de audio del navegador
     function unlockAudio() {
       if (!audioCtx) {
         audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -504,12 +419,12 @@
       }
     }
 
-    // Escuchamos el primer clic o toque en CUALQUIER parte de la pantalla para desbloquear
+    // Desbloquea el audio con el primer clic o toque
     document.body.addEventListener('click', unlockAudio, { once: true });
     document.body.addEventListener('touchstart', unlockAudio, { once: true });
 
     function playNote(frequency) {
-      if (!audioCtx) return; // Si por alguna razón no está listo, no hace nada
+      if (!audioCtx) return; 
       
       const oscillator = audioCtx.createOscillator();
       const gainNode = audioCtx.createGain();
@@ -658,7 +573,6 @@
 
       // 1. EFECTO HOVER: Suena la nota y salen notas musicales
       card.addEventListener('mouseenter', () => {
-        // Llamamos a unlockAudio por si el usuario ya interactuó pero el hover es lo primero
         if(audioCtx && audioCtx.state === 'suspended') { audioCtx.resume(); }
         playNote(noteFreq);
         
