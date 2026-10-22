@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CODISA FM Live · Nicaragua</title> <!-- CORREGIDO AQUÍ -->
+<title>CODISA FM Live · Nicaragua</title>
 <!-- Fuentes Futuristas -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,7 +13,7 @@
   /* ===== RESET ===== */
   * { margin:0; padding:0; box-sizing:border-box; }
 
-  /* ===== FONDO BASE ===== */
+  /* ===== FONDO BASE: LA BANDERA ===== */
   body {
     font-family: 'Rajdhani', sans-serif;
     min-height: 100vh;
@@ -24,10 +24,10 @@
     padding: 40px 20px;
     position: relative;
     overflow-x: hidden;
-    background: #010307;
+    background: #050a15; 
   }
 
-  /* Capa de la Bandera de Nicaragua (Más visible) */
+  /* Capa de la Bandera de Nicaragua */
   body::before {
     content: "";
     position: fixed;
@@ -36,18 +36,18 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    opacity: 0.55; /* Aumentado para que se vea mucho más */
-    filter: blur(1px) contrast(110%); 
+    opacity: 0.35; /* Ajustado para que se vea clara pero sin quitar protagonismo */
+    filter: blur(2px);
     z-index: 0;
     pointer-events: none;
   }
 
-  /* Capa oscura sutil para resaltar el neón sin tapar la bandera */
+  /* Capa oscura para resaltar el neón */
   body::after {
     content: "";
     position: fixed;
     inset: 0;
-    background: linear-gradient(180deg, rgba(1,3,7,0.2) 0%, rgba(1,3,7,0.6) 100%);
+    background: linear-gradient(180deg, rgba(5,10,21,0.4) 0%, rgba(5,10,21,0.8) 100%);
     z-index: 1;
     pointer-events: none;
   }
@@ -67,32 +67,22 @@
 
   header h1 {
     font-family: 'Orbitron', sans-serif;
-    font-size: clamp(2.2rem, 6vw, 4rem);
+    font-size: clamp(2.5rem, 7vw, 4.5rem);
     font-weight: 900;
     letter-spacing: 2px;
     text-transform: uppercase;
-    background: linear-gradient(90deg, #00f3ff, #ff0055, #00f3ff);
-    background-size: 200% auto;
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    animation: pulseText 4s linear infinite;
-    text-shadow: 0 0 25px rgba(0, 243, 255, 0.4);
-  }
-
-  @keyframes pulseText {
-    0% { background-position: 0% center; }
-    100% { background-position: 200% center; }
+    color: #ffffff;
+    text-shadow: 0 0 10px #00f3ff, 0 0 20px #ff0055, 0 4px 10px rgba(0,0,0,0.9);
   }
 
   header p {
     margin-top: 10px;
-    color: #d0e4ff;
+    color: #ffffff;
     font-size: clamp(1rem, 2vw, 1.2rem);
     letter-spacing: 6px;
     text-transform: uppercase;
-    font-weight: 600;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+    font-weight: 700;
+    text-shadow: 0 2px 8px rgba(0,0,0,1);
   }
 
   /* ===== CONTENEDOR DE LAS 5 TARJETAS ===== */
@@ -101,81 +91,95 @@
     flex-direction: row;
     justify-content: center;
     align-items: stretch;
-    gap: 20px;
+    gap: 25px; /* Un poco más de espacio entre teclas */
     width: 100%;
     max-width: 1200px;
     overflow-x: auto;
-    padding: 20px 10px;
+    padding: 20px 10px 40px; /* Espacio extra abajo para la sombra 3D */
     scrollbar-width: thin;
-    scrollbar-color: rgba(255,255,255,0.2) transparent;
+    scrollbar-color: rgba(255,255,255,0.4) transparent;
   }
 
   .cards-wrapper::-webkit-scrollbar { height: 6px; }
-  .cards-wrapper::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
+  .cards-wrapper::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.4); border-radius: 10px; }
 
-  /* Tarjeta Individual (Estilo Tecla de Piano) */
+  /* Tarjeta Individual (Estilo Tecla 3D) */
   .card {
     flex: 0 0 200px;
     position: relative;
-    background: rgba(8, 12, 25, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    padding: 30px 15px 20px;
+    background: rgba(8, 14, 26, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    padding: 30px 15px 25px;
     text-align: center;
     text-decoration: none;
     color: #fff;
     overflow: hidden;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    transition: transform 0.15s cubic-bezier(0.25, 0.8, 0.25, 1), 
-                box-shadow 0.15s ease, 
-                border-color 0.15s ease,
-                background 0.15s ease;
+    
+    /* Transición suave para el efecto de hundimiento */
+    transition: all 0.12s cubic-bezier(0.25, 0.8, 0.25, 1);
+    
     display: flex;
     flex-direction: column;
     align-items: center;
     cursor: pointer;
+    
+    /* Sombra base 3D (simula la altura de la tecla) */
+    box-shadow: 
+      0 8px 0 rgba(0, 0, 0, 0.8), /* Borde inferior 3D */
+      0 15px 20px rgba(0,0,0,0.6); /* Sombra difuminada en el suelo */
   }
 
+  /* Línea superior de neón */
   .card::before {
     content: "";
     position: absolute;
     top: 0; left: 0; right: 0;
-    height: 3px;
+    height: 4px;
     background: var(--glow);
     box-shadow: 0 0 15px var(--glow);
-    transition: height 0.3s ease, box-shadow 0.3s ease;
+    transition: all 0.12s ease;
   }
 
-  /* EFECTO PIANO AL PASAR EL MOUSE */
+  /* EFECTO PIANO AL PASAR EL MOUSE (Se hunde) */
   .card:hover {
-    transform: translateY(4px) scale(1.02);
+    /* Se mueve hacia abajo para simular que se presiona */
+    transform: translateY(6px); 
     border-color: var(--glow);
-    box-shadow: inset 0 -10px 20px -5px var(--glow), 0 10px 30px -5px var(--glow);
-    background: rgba(15, 20, 40, 0.95);
+    
+    /* La sombra 3D se reduce porque la tecla está hundida */
+    box-shadow: 
+      0 2px 0 rgba(0, 0, 0, 0.8), 
+      0 5px 10px rgba(0,0,0,0.6),
+      inset 0 0 20px rgba(255, 255, 255, 0.05); /* Brillo interno */
+    
+    background: rgba(12, 20, 35, 0.95);
     z-index: 10;
   }
   
+  /* El neón superior se expande al presionar */
   .card:hover::before { 
-    height: 100%;
-    opacity: 0.15;
-    box-shadow: 0 0 30px var(--glow);
+    height: 6px;
+    box-shadow: 0 0 25px var(--glow), 0 0 10px var(--glow);
   }
 
   /* CONTENEDOR DEL LOGO */
   .logo-container {
-    width: 100px;
-    height: 100px;
-    margin-bottom: 15px;
+    width: 105px;
+    height: 105px;
+    margin-bottom: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.05);
-    border: 2px solid rgba(255, 255, 255, 0.1);
-    padding: 5px;
-    transition: all 0.4s ease;
-    box-shadow: inset 0 0 20px rgba(0,0,0,0.6);
+    /* Fondo oscuro para que resalten los logos con brillo */
+    background: #0a1120; 
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    padding: 6px;
+    transition: all 0.3s ease;
+    box-shadow: inset 0 0 15px rgba(0,0,0,0.8);
     z-index: 2;
   }
 
@@ -183,19 +187,19 @@
     width: 100%;
     height: 100%;
     object-fit: contain;
-    filter: drop-shadow(0 0 8px var(--glow));
-    transition: transform 0.4s ease, filter 0.4s ease;
+    filter: drop-shadow(0 0 5px rgba(255,255,255,0.2));
+    transition: transform 0.3s ease, filter 0.3s ease;
   }
 
+  /* Efecto del logo al presionar la tecla */
   .card:hover .logo-container {
     border-color: var(--glow);
-    background: rgba(255, 255, 255, 0.1);
-    box-shadow: inset 0 0 20px var(--glow), 0 0 25px var(--glow);
+    box-shadow: inset 0 0 20px var(--glow), 0 0 15px var(--glow);
   }
 
   .card:hover .logo-container img {
     transform: scale(1.1);
-    filter: drop-shadow(0 0 15px var(--glow));
+    filter: drop-shadow(0 0 10px var(--glow));
   }
 
   /* TEXTOS */
@@ -206,6 +210,7 @@
     margin-bottom: 5px;
     transition: color 0.3s ease;
     z-index: 2;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
   }
 
   .card:hover h2 {
@@ -214,12 +219,17 @@
   }
 
   .card .tag {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     color: #8ba3c7;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
     font-weight: 600;
     z-index: 2;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+  }
+
+  .card:hover .tag {
+    color: #ffffff;
   }
 
   /* BOTÓN EN VIVO */
@@ -252,7 +262,7 @@
 
   @keyframes blink { 100% { opacity: 0.2; } }
 
-  /* ===== COLORES DE LOS LOGOS ===== */
+  /* ===== COLORES DE LOS LOGOS (Los que ya tenías) ===== */
   .futura  { --glow: #00d2ff; }
   .viva    { --glow: #ff2d55; }
   .shock   { --glow: #ff7300; }
@@ -260,19 +270,21 @@
   .clasica { --glow: #9d00ff; }
 
   footer {
-    margin-top: 40px;
-    color: #c0d0e0;
+    margin-top: 20px;
+    color: #ffffff;
     font-size: 0.85rem;
     letter-spacing: 2px;
     text-transform: uppercase;
-    font-weight: 600;
-    text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+    font-weight: 700;
+    text-shadow: 0 2px 5px rgba(0,0,0,1);
+    opacity: 0.6;
   }
 
   /* Ajustes para móviles */
   @media (max-width: 768px) {
-    .cards-wrapper { justify-content: flex-start; }
-    .card { flex: 0 0 170px; padding: 20px 10px; }
+    .cards-wrapper { justify-content: flex-start; padding-bottom: 20px; }
+    .card { flex: 0 0 170px; padding: 20px 10px 15px; box-shadow: 0 6px 0 rgba(0,0,0,0.8), 0 10px 15px rgba(0,0,0,0.6); }
+    .card:hover { transform: translateY(4px); box-shadow: 0 2px 0 rgba(0,0,0,0.8), 0 4px 8px rgba(0,0,0,0.6); }
     .logo-container { width: 80px; height: 80px; }
   }
 </style>
@@ -283,7 +295,7 @@
   <canvas id="fx-canvas"></canvas>
 
   <header>
-    <h1>CODISA FM Live</h1> <!-- CORREGIDO AQUÍ -->
+    <h1>CODISA FM Live</h1>
     <p>Nicaragua · En vivo 24/7</p>
   </header>
 
@@ -292,6 +304,7 @@
     <!-- 1. FUTURA 91.3 FM (Nota: Do) -->
     <a class="card futura" href="https://radiofuturanicaragua.com/" target="_blank" rel="noopener">
       <div class="logo-container" id="logo-futura" data-note="261.63">
+        <!-- REEMPLAZA ESTE SRC CON LA RUTA DE TU LOGO -->
         <img src="logo-futura.png" alt="Futura 91.3 FM" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'color:#00d2ff;font-family:Orbitron;font-size:22px;font-weight:bold;\'>91.3</span>';">
       </div>
       <h2>91.3 FM</h2>
@@ -302,6 +315,7 @@
     <!-- 2. VIVA 98.3 FM (Nota: Re) -->
     <a class="card viva" href="https://viva983fm.com/" target="_blank" rel="noopener">
       <div class="logo-container" id="logo-viva" data-note="293.66">
+        <!-- REEMPLAZA ESTE SRC CON LA RUTA DE TU LOGO -->
         <img src="logo-viva.png" alt="VIVA 98.3 FM" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'color:#ff2d55;font-family:Orbitron;font-size:22px;font-weight:bold;\'>98.3</span>';">
       </div>
       <h2>98.3 FM</h2>
@@ -312,6 +326,7 @@
     <!-- 3. SHOCK 99.5 FM (Nota: Mi) -->
     <a class="card shock" href="https://shock.ksoftech.com/" target="_blank" rel="noopener">
       <div class="logo-container" id="logo-shock" data-note="329.63">
+        <!-- REEMPLAZA ESTE SRC CON LA RUTA DE TU LOGO -->
         <img src="logo-shock.png" alt="Shock 99.5 FM" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'color:#ff7300;font-family:Orbitron;font-size:22px;font-weight:bold;\'>99.5</span>';">
       </div>
       <h2>99.5 FM</h2>
@@ -322,6 +337,7 @@
     <!-- 4. LA TUANI 100.3 FM (Nota: Fa) -->
     <a class="card tuani" href="https://www.latuani.com.ni/" target="_blank" rel="noopener">
       <div class="logo-container" id="logo-tuani" data-note="349.23">
+        <!-- REEMPLAZA ESTE SRC CON LA RUTA DE TU LOGO -->
         <img src="logo-tuani.png" alt="La Tuani 100.3 FM" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'color:#ffd700;font-family:Orbitron;font-size:22px;font-weight:bold;\'>100.3</span>';">
       </div>
       <h2>100.3 FM</h2>
@@ -332,6 +348,7 @@
     <!-- 5. CLÁSICA 101.9 FM (Nota: Sol) -->
     <a class="card clasica" href="https://clasica1019fm.com/" target="_blank" rel="noopener">
       <div class="logo-container" id="logo-clasica" data-note="392.00">
+        <!-- REEMPLAZA ESTE SRC CON LA RUTA DE TU LOGO -->
         <img src="logo-clasica.png" alt="Clásica 101.9 FM" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'color:#9d00ff;font-family:Orbitron;font-size:22px;font-weight:bold;\'>101.9</span>';">
       </div>
       <h2>101.9 FM</h2>
@@ -341,7 +358,7 @@
 
   </div>
 
-  <footer>© 2025 · CODISA FM Live</footer> <!-- CORREGIDO AQUÍ -->
+  <footer>© 2025 · CODISA FM Live</footer>
 
   <!-- ===== SCRIPT DE EFECTOS VISUALES Y AUDIO ===== -->
   <script>
@@ -366,7 +383,6 @@
       oscillator.type = 'sine'; 
       oscillator.frequency.value = frequency; 
       
-      // Envolvente de volumen (ataque y caída)
       gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
       gainNode.gain.linearRampToValueAtTime(0.3, audioCtx.currentTime + 0.05);
       gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1.5);
@@ -506,22 +522,16 @@
       const logo = card.querySelector('.logo-container');
       const noteFreq = parseFloat(logo.getAttribute('data-note'));
 
-      // 1. Efecto Piano (Hover) -> Reproduce la nota
       card.addEventListener('mouseenter', () => {
         playNote(noteFreq);
       });
 
-      // 2. Explosión Musical (Clic) en el LOGO
       logo.addEventListener('click', function(e) {
-        // Reproducir nota al hacer clic también
         playNote(noteFreq);
-
-        // Obtener posición exacta del logo
         const rect = this.getBoundingClientRect();
         const centerX = rect.left + rect.width / 2;
         const centerY = rect.top + rect.height / 2;
         
-        // Generar explosión
         for (let i = 0; i < 40; i++) {
           explosions.push(new ExplosionParticle(centerX, centerY));
         }
