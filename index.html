@@ -13,7 +13,7 @@
   /* ===== RESET ===== */
   * { margin:0; padding:0; box-sizing:border-box; }
 
-  /* ===== FONDO BASE: LA BANDERA ===== */
+  /* ===== FONDO BASE: LA BANDERA (AHORA MUY VISIBLE) ===== */
   body {
     font-family: 'Rajdhani', sans-serif;
     min-height: 100vh;
@@ -27,6 +27,7 @@
     background: #050a15; 
   }
 
+  /* Capa de la bandera */
   body::before {
     content: "";
     position: fixed;
@@ -35,17 +36,18 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    opacity: 0.35; 
-    filter: blur(2px);
+    opacity: 0.85; /* ¡Aumentado al 85% para que se vea clarísima! */
     z-index: 0;
     pointer-events: none;
   }
 
+  /* Capa oscura sutil para que los textos se lean perfectamente */
   body::after {
     content: "";
     position: fixed;
     inset: 0;
-    background: linear-gradient(180deg, rgba(5,10,21,0.4) 0%, rgba(5,10,21,0.8) 100%);
+    /* Un gradiente suave: oscuro abajo para las tarjetas, claro arriba para el letrero */
+    background: linear-gradient(180deg, rgba(5,10,21,0.2) 0%, rgba(5,10,21,0.6) 50%, rgba(5,10,21,0.9) 100%);
     z-index: 1;
     pointer-events: none;
   }
@@ -66,17 +68,15 @@
   /* ===== EL LETRERO CODISA ON AIR ===== */
   .on-air-sign {
     display: inline-block;
-    background: rgba(10, 5, 0, 0.85);
-    border: 5px solid #ffcc00; /* Borde amarillo brillante */
+    background: rgba(10, 5, 0, 0.9); /* Fondo oscuro para que el neón resalte */
+    border: 5px solid #ffcc00; 
     border-radius: 12px;
     padding: 15px 45px;
     margin-bottom: 20px;
-    /* Efecto de resplandor neón amarillo */
     box-shadow: 
       0 0 20px #ffcc00, 
       inset 0 0 20px #ffcc00,
       0 0 50px rgba(255, 204, 0, 0.6);
-    /* Animación de parpadeo para todo el letrero */
     animation: signFlicker 2s infinite alternate;
   }
 
@@ -87,7 +87,6 @@
     color: #ffffff;
     text-transform: uppercase;
     letter-spacing: 5px;
-    /* Resplandor del texto */
     text-shadow: 
       0 0 10px #ffffff,
       0 0 20px #ffcc00,
@@ -105,7 +104,6 @@
     text-shadow: 0 0 10px #ffcc00;
   }
 
-  /* Animación del letrero */
   @keyframes signFlicker {
     0%, 18%, 22%, 25%, 53%, 57%, 100% { 
       opacity: 1; 
@@ -149,7 +147,7 @@
   .card {
     flex: 0 0 200px;
     position: relative;
-    background: rgba(8, 14, 26, 0.9);
+    background: rgba(8, 14, 26, 0.85); /* Fondo más oscuro para contraste */
     border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 16px;
     padding: 30px 15px 25px;
@@ -311,7 +309,7 @@
     text-transform: uppercase;
     font-weight: 700;
     text-shadow: 0 2px 5px rgba(0,0,0,1);
-    opacity: 0.6;
+    opacity: 0.8;
   }
 
   /* Ajustes para móviles */
@@ -406,7 +404,6 @@
     // --- SISTEMA DE AUDIO (Efecto Piano) ---
     let audioCtx = null;
 
-    // Desbloqueo de audio en el primer clic para evitar problemas de política del navegador
     function unlockAudio() {
       if (!audioCtx) {
         audioCtx = new (window.AudioContext || window.webkitAudioContext)();
