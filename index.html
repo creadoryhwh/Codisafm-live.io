@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CODISA FM Live · Nicaragua</title>
+<title>CODISA FM Live · Managua Nicaragua</title>
 <!-- Fuentes Futuristas -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -140,7 +140,7 @@
   .cards-wrapper::-webkit-scrollbar { height: 6px; }
   .cards-wrapper::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.4); border-radius: 10px; }
 
-  /* Tarjeta Individual (Estilo Original) */
+  /* Tarjeta Individual */
   .card {
     flex: 0 0 200px;
     position: relative;
@@ -177,7 +177,7 @@
     transition: all 0.15s ease;
   }
 
-  /* EFECTO PIANO AL PASAR EL MOUSE (Se hunde) */
+  /* EFECTO PIANO AL PASAR EL MOUSE (La tarjeta se hunde) */
   .card:hover {
     transform: translateY(6px); 
     border-color: var(--glow);
@@ -206,13 +206,17 @@
     justify-content: center;
     border-radius: 50%;
     
-    /* Fondo blanco puro y resplandeciente */
     background: #ffffff; 
     border: 3px solid rgba(255, 255, 255, 0.8);
-    padding: 8px; /* Espacio para que el logo respire */
+    padding: 8px; 
     
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+    /* Transición suave para el efecto 3D */
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+    
+    /* Sombra base (parece que está apoyado) */
+    box-shadow: 
+      0 4px 6px rgba(0,0,0,0.3),
+      inset 0 0 10px rgba(0,0,0,0.1);
     z-index: 2;
   }
 
@@ -220,20 +224,29 @@
     width: 100%;
     height: 100%;
     object-fit: contain;
+    /* Transición para el resplandor del logo */
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.4s ease;
     filter: drop-shadow(0 2px 3px rgba(0,0,0,0.2));
-    transition: transform 0.3s ease, filter 0.3s ease;
   }
 
-  /* Efecto al pasar el mouse por la tarjeta */
+  /* ===== EFECTO 3D DE ALTA CALIDAD AL PASAR EL MOUSE ===== */
   .card:hover .logo-container {
-    transform: scale(1.05);
-    /* El borde blanco brilla con el color de la radio */
-    box-shadow: 0 0 20px var(--glow), inset 0 0 10px rgba(0,0,0,0.1);
+    /* Se eleva y se hace un poco más grande (sale de la pantalla) */
+    transform: translateY(-10px) scale(1.1);
+    
+    /* Múltiples capas de sombras para el efecto 3D y el neón del color de la radio */
+    box-shadow: 
+      0 15px 25px rgba(0,0,0,0.4),          /* Sombra de elevación principal */
+      0 5px 10px rgba(0,0,0,0.3),           /* Sombra secundaria */
+      0 0 25px var(--glow),                 /* Resplandor exterior neón */
+      0 0 40px var(--glow),                 /* Resplandor más amplio */
+      inset 0 -4px 8px rgba(0,0,0,0.1);     /* Sombra interior para volumen */
   }
 
   .card:hover .logo-container img {
-    transform: scale(1.1);
-    filter: drop-shadow(0 4px 6px var(--glow));
+    /* El logo en sí también resalta */
+    transform: scale(1.05);
+    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.4)) drop-shadow(0 0 15px var(--glow));
   }
 
   /* TEXTOS */
@@ -330,7 +343,7 @@
   <header>
     <div class="on-air-sign">
       <h1>CODISA ON AIR</h1>
-      <p>Managua Nicaragua · 24/7</p>
+      <p>Nicaragua · 24/7</p>
     </div>
     <p class="subtitle">Nicaragua · En vivo 24/7</p>
   </header>
