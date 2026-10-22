@@ -88,13 +88,13 @@
     50% { transform: translateY(-10px); }
   }
 
-  /* ===== EL LETRERO CODISA ON AIR ===== */
+  /* ===== EL LETRERO CODISA ON AIR (Solo Título) ===== */
   .on-air-sign {
     display: inline-block;
     background: rgba(10, 5, 0, 0.9); 
     border: 5px solid #ffcc00; 
     border-radius: 12px;
-    padding: 15px 45px;
+    padding: 20px 50px; /* Ajustado para que se vea bien sin el texto extra */
     margin-bottom: 15px;
     box-shadow: 
       0 0 20px #ffcc00, 
@@ -115,17 +115,7 @@
       0 0 10px #ffffff,
       0 0 20px #ffcc00,
       0 0 40px #ffcc00;
-  }
-
-  .on-air-sign p {
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 1rem;
-    color: #ffe066;
-    letter-spacing: 6px;
-    margin-top: 5px;
-    text-transform: uppercase;
-    font-weight: 700;
-    text-shadow: 0 0 10px #ffcc00;
+    margin: 0;
   }
 
   @keyframes signFlicker {
@@ -146,7 +136,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 5px;
+    gap: 8px;
   }
 
   .header-info p.subtitle {
@@ -376,7 +366,7 @@
     .cards-wrapper { justify-content: flex-start; padding-bottom: 20px; }
     .card { flex: 0 0 170px; padding: 20px 10px 15px; }
     .logo-container { width: 85px; height: 85px; padding: 6px; }
-    .on-air-sign { padding: 10px 20px; }
+    .on-air-sign { padding: 15px 30px; }
     .mascota-container { width: 120px; margin-bottom: -10px; }
   }
 </style>
@@ -393,9 +383,9 @@
     </div>
 
     <header>
+      <!-- LETRERO SOLO CON EL TÍTULO -->
       <div class="on-air-sign">
         <h1>CODISA ON AIR</h1>
-        <p>Nicaragua · 24/7</p>
       </div>
       
       <!-- TEXTO CENTRADO Y RELOJ DIGITAL -->
@@ -474,7 +464,7 @@
       document.getElementById('reloj').textContent = `${horas}:${minutos}:${segundos}`;
     }
     setInterval(actualizarReloj, 1000);
-    actualizarReloj(); // Ejecutar de inmediato al cargar
+    actualizarReloj(); 
 
     // --- 2. EFECTOS Y AUDIO ---
     const canvas = document.getElementById('fx-canvas');
@@ -486,7 +476,6 @@
 
     let audioCtx = null;
 
-    // Desbloqueo de audio silencioso con el primer clic
     function unlockAudio() {
       if (!audioCtx) {
         audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -518,9 +507,7 @@
       oscillator.stop(audioCtx.currentTime + 1.5);
     }
 
-    // --- LUCIÉRNAGAS DE FONDO ---
     let fireflies = [];
-
     class Firefly {
       constructor() { this.reset(true); }
       reset(init = false) {
@@ -567,9 +554,7 @@
       }
     }
 
-    // --- PARTÍCULAS DE EXPLOSIÓN Y HOVER ---
     let explosions = [];
-
     class ExplosionParticle {
       constructor(x, y, isHover = false) {
         this.x = x;
@@ -614,7 +599,6 @@
       }
     }
 
-    // --- CONFIGURACIÓN DEL CANVAS ---
     function resize() {
       width = canvas.width = window.innerWidth;
       height = canvas.height = window.innerHeight;
@@ -639,9 +623,7 @@
     }
     animate();
 
-    // --- INTERACCIÓN CON LAS TARJETAS ---
     const cards = document.querySelectorAll('.card');
-    
     cards.forEach(card => {
       const logo = card.querySelector('.logo-container');
       const noteFreq = parseFloat(logo.getAttribute('data-note'));
