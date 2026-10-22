@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CODISA FM Live · Nicaragua</title>
+<!-- Fuentes Futuristas -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+  /* ===== RESET ===== */
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  /* ===== FONDO BASE ===== */
+  body {
+    font-family: 'Rajdhani', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Centra el contenido verticalmente */
+    padding: 40px 20px;
+    position: relative;
+    overflow-x: hidden;
+    background: #010307;
+  }
+
+  /* Capa de la Bandera de Nicaragua (Transparente) */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image: url('bandera.jpg'); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.15; 
+    filter: grayscale(40%) blur(3px) contrast(120%);
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  /* Capa oscura para resaltar el neón */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(1,3,7,0.6) 0%, rgba(1,3,7,0.95) 100%);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  /* ===== CANVAS DE EFECTOS ===== */
+  #fx-canvas {
+    position: fixed;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  /* ===== CONTENIDO PRINCIPAL ===== */
+  header, .cards-wrapper, footer { position: relative; z-index: 3; }
+
+  header { text-align:center; margin-bottom: 50px; }
+
+  header h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(2.2rem, 6vw, 4rem);
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    background: linear-gradient(90deg, #00f3ff, #ff0055, #00f3ff);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: pulseText 4s linear infinite;
+    text-shadow: 0 0 25px rgba(0, 243, 255, 0.2);
+  }
+
+  @keyframes pulseText {
+    0% { background-position: 0% center; }
+    100% { background-position: 200% center; }
+  }
+
+  header p {
+    margin-top: 10px;
+    color: #b0c4de;
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  /* ===== CONTENEDOR DE LAS 5 TARJETAS (EN UNA SOLA FILA) ===== */
+  .cards-wrapper {
+    display: flex;
+    flex-direction: row; /* Fuerza la fila */
+    justify-content: center;
+    align-items: stretch;
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px;
+    overflow-x: auto; /* Permite scroll horizontal en móviles */
+    padding: 20px 10px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.2) transparent;
+  }
+
+  /* Scrollbar personalizado para navegadores Webkit */
+  .cards-wrapper::-webkit-scrollbar { height: 6px; }
+  .cards-wrapper::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
+
+  /* Tarjeta Individual */
+  .card {
+    flex: 0 0 200px; /* Ancho fijo para que no se deformen */
+    position: relative;
+    background: rgba(8, 12, 25, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 30px 15px 20px;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    overflow: hidden;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
+                box-shadow 0.3s ease, 
+                border-color 0.3s ease,
+                background 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--glow);
+    box-shadow: 0 0 15px var(--glow);
+    transition: height 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  /* Aumento de tamaño al pasar el mouse */
+  .card:hover {
+    transform: translateY(-10px) scale(1.05);
+    border-color: var(--glow);
+    box-shadow: 0 15px 35px -5px var(--glow);
+    background: rgba(15, 20, 40, 0.95);
+    z-index: 10;
+  }
+  
+  .card:hover::before { 
+    height: 6px;
+    box-shadow: 0 0 25px var(--glow);
+  }
+
+  /* CONTENEDOR DEL LOGO (Aquí nacen las explosiones) */
+  .logo-container {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.03);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    padding: 5px;
+    transition: all 0.4s ease;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.6);
+  }
+
+  .logo-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 0 8px var(--glow));
+    transition: transform 0.4s ease, filter 0.4s ease;
+  }
+
+  .card:hover .logo-container {
+    border-color: var(--glow);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: inset 0 0 20px var(--glow), 0 0 25px var(--glow);
+  }
+
+  .card:hover .logo-container img {
+    transform: scale(1.15);
+    filter: drop-shadow(0 0 15px var(--glow));
+  }
+
+  /* Efecto al hacer clic */
+  .card:active {
+    transform: translateY(-5px) scale(0.97);
+    transition: transform 0.1s ease;
+  }
+
+  /* TEXTOS */
+  .card h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+    transition: color 0.3s ease;
+  }
+
+  .card:hover h2 {
+    color: var(--glow);
+    text-shadow: 0 0 10px var(--glow);
+  }
+
+  .card .tag {
+    font-size: 0.8rem;
+    color: #8ba3c7;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+  }
+
+  /* BOTÓN EN VIVO */
+  .live {
+    margin-top: 15px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 2px;
+    color: var(--glow);
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+  }
+
+  .card:hover .live { opacity: 1; }
+
+  .live::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--glow);
+    box-shadow: 0 0 10px var(--glow);
+    animation: blink 1s infinite alternate;
+  }
+
+  @keyframes blink { 100% { opacity: 0.2; } }
+
+  /* ===== COLORES DE LOS LOGOS ===== */
+  .futura  { --glow: #00d2ff; }
+  .viva    { --glow: #ff2d55; }
+  .shock   { --glow: #ff7300; }
+  .tuani   { --glow: #ffd700; }
+  .clasica { --glow: #9d00ff; }
+
+  footer {
+    margin-top: 40px;
+    color: #5a6b8a;
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  /* Ajustes para móviles */
+  @media (max-width: 768px) {
+    .cards-wrapper { justify-content: flex-start; } /* Alinea a la izquierda para permitir scroll */
+    .card { flex: 0 0 170px; padding: 20px 10px; }
+    .logo-container { width: 80px; height: 80px; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- Lienzo para las luciérnagas y explosiones -->
+  <canvas id="fx-canvas"></canvas>
+
+  <header>
+    <h1>Radios FM Live</h1>
+    <p>Nicaragua · En vivo 24/7</p>
+  </header>
+
+  <!-- Contenedor Flex para mantener las 5 tarjetas en fila -->
+  <div class="cards-wrapper">
+
+    <!-- 1. FUTURA 91.3 FM -->
+    <a class="card futura" href="https://radiofuturanicaragua.com/" target="_blank" rel="noopener">
+      <div class="logo-container" id="logo-futura">
+        <img src="logo-futura.png" alt="Futura 91.3 FM" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'color:#00d2ff;font-family:Orbitron;font-size:22px;font-weight:bold;\'>91.3</span>';">
+      </div>
+      <h2>91.3 FM</h2>
+      <span class="tag">Futura</span>
+      <div class="live">EN VIVO</div>
+    </a>
+
+    <!-- 2. VIVA 98.3 FM -->
+    <a class="card viva" href="https://viva983fm.com/" target="_blank" rel="noopener">
+      <div class="logo-container" id="logo-viva">
+        <img src="logo-viva.png" alt="VIVA 98.3 FM" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'color:#ff2d55;font-family:Orbitron;font-size:22px;font-weight:bold;\'>98.3</span>';">
+      </div>
+      <h2>98.3 FM</h2>
+      <span class="tag">VIVA</span>
+      <div class="live">EN VIVO</div>
+    </a>
+
+    <!-- 3. SHOCK 99.5 FM -->
+    <a class="card shock" href="https://shock.ksoftech.com/" target="_blank" rel="noopener">
+      <div class="logo-container" id="logo-shock">
+        <img src="logo-shock.png" alt="Shock 99.5 FM" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'color:#ff7300;font-family:Orbitron;font-size:22px;font-weight:bold;\'>99.5</span>';">
+      </div>
+      <h2>99.5 FM</h2>
+      <span class="tag">Shock</span>
+      <div class="live">EN VIVO</div>
+    </a>
+
+    <!-- 4. LA TUANI 100.3 FM -->
+    <a class="card tuani" href="https://www.latuani.com.ni/" target="_blank" rel="noopener">
+      <div class="logo-container" id="logo-tuani">
+        <img src="logo-tuani.png" alt="La Tuani 100.3 FM" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'color:#ffd700;font-family:Orbitron;font-size:22px;font-weight:bold;\'>100.3</span>';">
+      </div>
+      <h2>100.3 FM</h2>
+      <span class="tag">La Tuani</span>
+      <div class="live">EN VIVO</div>
+    </a>
+
+    <!-- 5. CLÁSICA 101.9 FM -->
+    <a class="card clasica" href="https://clasica1019fm.com/" target="_blank" rel="noopener">
+      <div class="logo-container" id="logo-clasica">
+        <img src="logo-clasica.png" alt="Clásica 101.9 FM" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'color:#9d00ff;font-family:Orbitron;font-size:22px;font-weight:bold;\'>101.9</span>';">
+      </div>
+      <h2>101.9 FM</h2>
+      <span class="tag">Clásica</span>
+      <div class="live">EN VIVO</div>
+    </a>
+
+  </div>
+
+  <footer>© 2025 · Radios FM Live</footer>
+
+  <!-- ===== SCRIPT DE EFECTOS VISUALES ===== -->
+  <script>
+    const canvas = document.getElementById('fx-canvas');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+
+    const notes = ['🎵', '🎶', '🎧', '♪', '♫', '♬', '♩'];
+    const colors = ['#00d2ff', '#ff2d55', '#ff7300', '#ffd700', '#9d00ff', '#ffffff'];
+
+    // --- 1. LUCIÉRNAGAS DE FONDO ---
+    let fireflies = [];
+
+    class Firefly {
+      constructor() { this.reset(true); }
+      reset(init = false) {
+        this.x = Math.random() * width;
+        this.y = init ? Math.random() * height : height + 50;
+        this.size = Math.random() * 15 + 10;
+        this.speedY = Math.random() * 1 + 0.3;
+        this.speedX = (Math.random() - 0.5) * 0.8;
+        this.note = notes[Math.floor(Math.random() * notes.length)];
+        this.color = colors[Math.floor(Math.random() * colors.length)];
+        this.opacity = 0;
+        this.maxOpacity = Math.random() * 0.6 + 0.2;
+        this.fadeState = 'in';
+        this.rotation = Math.random() * Math.PI * 2;
+        this.rotSpeed = (Math.random() - 0.5) * 0.02;
+        this.wobble = Math.random() * Math.PI * 2;
+      }
+      update() {
+        this.y -= this.speedY;
+        this.wobble += 0.02;
+        this.x += Math.sin(this.wobble) * 0.5 + this.speedX;
+        this.rotation += this.rotSpeed;
+        if (this.fadeState === 'in') {
+          this.opacity += 0.01;
+          if (this.opacity >= this.maxOpacity) this.fadeState = 'out';
+        } else {
+          this.opacity -= 0.005;
+        }
+        if (this.opacity <= 0 || this.y < -50 || this.x < -50 || this.x > width + 50) this.reset();
+      }
+      draw() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.rotation);
+        ctx.globalAlpha = this.opacity;
+        ctx.fillStyle = this.color;
+        ctx.font = `${this.size}px Arial`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.shadowBlur = 15;
+        ctx.shadowColor = this.color;
+        ctx.fillText(this.note, 0, 0);
+        ctx.restore();
+      }
+    }
+
+    // --- 2. EXPLOSIÓN MUSICAL (Al hacer clic en el LOGO) ---
+    let explosions = [];
+
+    class ExplosionParticle {
+      constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        const angle = Math.random() * Math.PI * 2;
+        const speed = Math.random() * 10 + 3;
+        this.vx = Math.cos(angle) * speed;
+        this.vy = Math.sin(angle) * speed;
+        this.gravity = 0.25;
+        this.friction = 0.95;
+        this.size = Math.random() * 18 + 12;
+        this.note = notes[Math.floor(Math.random() * notes.length)];
+        this.color = colors[Math.floor(Math.random() * colors.length)];
+        this.opacity = 1;
+        this.decay = Math.random() * 0.02 + 0.01;
+        this.rotation = Math.random() * Math.PI * 2;
+        this.rotSpeed = (Math.random() - 0.5) * 0.3;
+      }
+      update() {
+        this.vx *= this.friction;
+        this.vy *= this.friction;
+        this.vy += this.gravity;
+        this.x += this.vx;
+        this.y += this.vy;
+        this.rotation += this.rotSpeed;
+        this.opacity -= this.decay;
+      }
+      draw() {
+        if (this.opacity <= 0) return;
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.rotation);
+        ctx.globalAlpha = this.opacity;
+        ctx.fillStyle = this.color;
+        ctx.font = `${this.size}px Arial`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.shadowBlur = 20;
+        ctx.shadowColor = this.color;
+        ctx.fillText(this.note, 0, 0);
+        ctx.restore();
+      }
+    }
+
+    // --- CONFIGURACIÓN DEL CANVAS ---
+    function resize() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    const fireflyCount = window.innerWidth < 768 ? 30 : 70;
+    for (let i = 0; i < fireflyCount; i++) {
+      fireflies.push(new Firefly());
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+      fireflies.forEach(f => { f.update(); f.draw(); });
+      for (let i = explosions.length - 1; i >= 0; i--) {
+        explosions[i].update();
+        explosions[i].draw();
+        if (explosions[i].opacity <= 0) explosions.splice(i, 1);
+      }
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    // --- DETECTAR CLIC EN LOS LOGOS ---
+    // Seleccionamos los contenedores de los logos por su ID
+    const logos = [
+      document.getElementById('logo-futura'),
+      document.getElementById('logo-viva'),
+      document.getElementById('logo-shock'),
+      document.getElementById('logo-tuani'),
+      document.getElementById('logo-clasica')
+    ];
+
+    logos.forEach(logo => {
+      if(logo) {
+        logo.addEventListener('click', function(e) {
+          // Detenemos la propagación para que no se active el enlace (a menos que quieras)
+          // Si quieres que el enlace se abra, comenta la siguiente línea:
+          // e.preventDefault(); 
+          
+          // Obtenemos la posición exacta del logo en la pantalla
+          const rect = this.getBoundingClientRect();
+          const centerX = rect.left + rect.width / 2;
+          const centerY = rect.top + rect.height / 2;
+          
+          // Generamos 40 notas musicales explotando
+          for (let i = 0; i < 40; i++) {
+            explosions.push(new ExplosionParticle(centerX, centerY));
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>
